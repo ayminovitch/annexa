@@ -6,8 +6,12 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "fastapi>=0.115.4",
-    "httpx>=0.28.1",
     "uvicorn>=0.32.0",
+    "pydantic-settings>=2.6.1",
+    "sqlalchemy>=2.0.35",
+    "asyncpg>=0.30.0",
+    "alembic>=1.13.3",
+    "greenlet>=3.1.1"
 ]
 
 [tool.uv]
@@ -58,9 +62,12 @@ select = [
 root_package = "annexa"
 
 [[tool.importlinter.contracts]]
-name = "Domain is independent"
+name = "Hexagonal Archotecture Dependency Rule"
 type = "layers"
 layers = [
-    "annexa.entrypoints | annexa.shared.infrastructure",
+    "annexa.entrypoints",
+    "annexa.shared.infrastructure",
+    "annexa.config",
+    "annexa.shared.application",
     "annexa.shared.domain",
 ]

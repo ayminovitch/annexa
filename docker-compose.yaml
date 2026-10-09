@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: annexa
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: annexa_dev
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/postgresql/data
+
+volumes:
+  pgdata:
