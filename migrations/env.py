@@ -15,10 +15,12 @@ if config.config_file_name is not None:
 
 target_metadata = Base.metadata
 
+
 def do_run_migrations(connection) -> None:
     context.configure(connection=connection, target_metadata=target_metadata)
     with context.begin_transaction():
         context.run_migrations()
+
 
 async def run_async_migrations() -> None:
     configuration = config.get_section(config.config_ini_section, {})
@@ -35,7 +37,9 @@ async def run_async_migrations() -> None:
 
     await connectable.dispose()
 
+
 def run_migrations_online() -> None:
     asyncio.run(run_async_migrations())
+
 
 run_migrations_online()

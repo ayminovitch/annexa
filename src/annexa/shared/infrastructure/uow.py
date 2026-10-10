@@ -1,13 +1,12 @@
-from typing import Self, Any
+from typing import Any, Self
 
-from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from annexa.shared.application.uow import UnitOfWork
 
 
 class SqlAlchemyUnitOfWork(UnitOfWork):
-
-    def __init__(self, session_factory: async_sessionmaker[AsyncSession] ):
+    def __init__(self, session_factory: async_sessionmaker[AsyncSession]):
         self._session_factory = session_factory
         self.session: AsyncSession | None = None
 
