@@ -8,6 +8,8 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 from annexa.config.settings import settings
 from annexa.shared.infrastructure.database import Base
 
+import annexa.identity.infrastructure.orm
+
 config = context.config
 
 if config.config_file_name is not None:
