@@ -76,6 +76,6 @@ layers = [
     "annexa.config",
     "annexa.identity.application",
     "annexa.shared.application",
-    "annexa.identity.domain",
+    "annexa.identity.domain | annexa.inventory.domain",
     "annexa.shared.domain",
 ]

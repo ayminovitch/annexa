@@ -34,8 +34,11 @@ def test_jwt_creation_and_decoding() -> None:
         created_at=clock.now(),
     )
 
-    token = create_access_token(user, clock)
-    decoded_user = decode_access_token(token)
+    test_secret = "test_secret_key"
+    test_algo = "HS256"
+
+    token = create_access_token(user, clock, test_secret, test_algo, 15)
+    decoded_user = decode_access_token(token, test_secret, test_algo)
 
     assert decoded_user is not None
     assert decoded_user.id == user.id
@@ -44,4 +47,4 @@ def test_jwt_creation_and_decoding() -> None:
 
 
 def test_invalid_jwt_returns_none() -> None:
-    assert decode_access_token("not.a.real.token") is None
+    assert decode_access_token("not.a.real.token", "secret", "HS256") is None

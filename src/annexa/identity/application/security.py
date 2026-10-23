@@ -5,7 +5,6 @@ import jwt
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
 
-from annexa.config.settings import settings
 from annexa.identity.domain.entities import Role, User
 from annexa.shared.domain.ids import TenantId, UserId
 from annexa.shared.domain.time import Clock
@@ -24,9 +23,15 @@ def verify_secret(hash_str: str, secret: str) -> bool:
         return False
 
 
-def create_access_token(user: User, clock: Clock) -> str:
+def create_access_token(
+        user: User,
+        clock: Clock,
+        secret: str,
+        algorithm: str,
+        expires_minutes: int
+) -> str:
     now = clock.now()
-    expires = now + datetime.timedelta(minutes=settings.jwt_access_expiration_minutes)
+    expires = now + datetime.timedelta(minutes=expires_minutes)
 
     payload = {
         "sub": str(user.id),
@@ -37,13 +42,13 @@ def create_access_token(user: User, clock: Clock) -> str:
         "iat": int(now.timestamp()),
     }
 
-    return jwt.encode(payload, settings.jwt_secret, algorithm=settings.jwt_algorithm)
+    return jwt.encode(payload, secret, algorithm=algorithm)
 
 
-def decode_access_token(token: str) -> User | None:
+def decode_access_token(token: str,secret: str, algorithm: str) -> User | None:
     try:
         payload = jwt.decode(
-            token, settings.jwt_secret, algorithms=[settings.jwt_algorithm]
+            token, secret, algorithms=[algorithm]
         )
 
         return User(
@@ -53,5 +58,5 @@ def decode_access_token(token: str) -> User | None:
             role=Role(payload["role"]),
             created_at=datetime.datetime.fromtimestamp(payload["iat"], tz=datetime.UTC),
         )
-    except jwt.PyJWTError:
+    except (jwt.PyJWTError, ValueError):
         return None

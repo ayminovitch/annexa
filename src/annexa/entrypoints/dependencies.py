@@ -1,6 +1,7 @@
 from fastapi import Depends
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
+from annexa.config.settings import settings
 from annexa.identity.application.security import decode_access_token
 from annexa.identity.domain.entities import User
 from annexa.shared.domain.exceptions import DomainError
@@ -25,7 +26,11 @@ def get_current_user(
     if not credentials:
         raise UnauthorizedError()
 
-    user = decode_access_token(credentials.credentials)
+    user = decode_access_token(
+        token=credentials.credentials,
+        secret=settings.jwt_secret,
+        algorithm=settings.jwt_algorithm
+    )
     if not user:
         raise UnauthorizedError()
 
