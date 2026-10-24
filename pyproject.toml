@@ -17,6 +17,12 @@ dependencies = [
     "argon2-cffi>=23.1.0",
 ]
 
+[tool.uv.workspace]
+members = ["packages/*"]
+
+[tool.uv.sources]
+annexa-scanner = {workspace = true}
+
 [dependency-groups]
 dev = [
     "pytest>=8.0.0",
@@ -25,6 +31,7 @@ dev = [
     "import-linter>=2.1.0",
     "httpx>=0.27.2",
     "pytest-asyncio>=0.24.0",
+    "annexa-scanner"
 ]
 
 [build-system]
@@ -43,12 +50,12 @@ strict = true
 mypy_path = "src"
 explicit_package_bases = true
 warn_unreachable = true
-files = ["src", "tests"]
+files = ["src", "tests", "packages/annexa-scanner/src"]
 
 [tool.ruff]
 target-version = "py313"
 line-length = 88
-src = ["src", "tests"]
+src = ["src", "tests", "packages/annexa-scanner/src"]
 
 [tool.ruff.lint]
 select = ["E", "W", "F", "I", "UP", "B", "SIM"]
@@ -64,6 +71,8 @@ extend-immutable-calls = [
     "fastapi.Body",
     "fastapi.Header",
     "fastapi.Security",
+    "typer.Argument",
+    "typer.Option"
 ]
 
 [[tool.importlinter.contracts]]

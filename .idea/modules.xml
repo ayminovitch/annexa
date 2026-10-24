@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/annexa.iml" filepath="$PROJECT_DIR$/.idea/annexa.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/annexa-scanner.iml" filepath="$PROJECT_DIR$/.idea/annexa-scanner.iml" />
     </modules>
   </component>
 </project>
