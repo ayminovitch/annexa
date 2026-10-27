@@ -4,6 +4,7 @@ from typing import NewType
 TenantId = NewType("TenantId", uuid.UUID)
 UserId = NewType("UserId", uuid.UUID)
 SystemId = NewType("SystemId", uuid.UUID)
+ChunkId = NewType("ChunkId", uuid.UUID)
 
 
 def generate_uuid() -> uuid.UUID:

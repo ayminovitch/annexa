@@ -1,14 +1,15 @@
 import asyncio
 from logging.config import fileConfig
 
-from alembic import context
-from sqlalchemy import pool
+from sqlalchemy import pool, text
 from sqlalchemy.ext.asyncio import async_engine_from_config
+from alembic import context
 
 from annexa.config.settings import settings
 from annexa.shared.infrastructure.database import Base
 
-import annexa.identity.infrastructure.orm
+import annexa.identity.infrastructure.orm  # noqa: F401
+import annexa.regulation.infrastructure.orm  # noqa: F401
 
 config = context.config
 
@@ -35,6 +36,9 @@ async def run_async_migrations() -> None:
     )
 
     async with connectable.connect() as connection:
+        await connection.execute(text("CREATE EXTENSION IF NOT EXISTS vector;"))
+        await connection.commit()
+
         await connection.run_sync(do_run_migrations)
 
     await connectable.dispose()
