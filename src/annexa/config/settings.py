@@ -8,6 +8,8 @@ class Settings(BaseSettings):
     jwt_algorithm: str = "HS256"
     jwt_access_expiration_minutes: int = 15
 
+    gemini_api_key:str = "dummy_local_key"
+
     model_config = SettingsConfigDict(
         env_file=".env", env_file_encoding="utf-8", extra="ignore"
     )

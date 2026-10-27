@@ -1,3 +1,4 @@
+from collections.abc import AsyncGenerator
 from typing import Protocol
 
 
@@ -14,4 +15,7 @@ class LLMProvider(Protocol):
     Port: Abstraction for text generation
     """
     async def generate_text(self, prompt: str) -> str:
+        ...
+
+    def generate_text_stream(self, prompt: str) -> AsyncGenerator[str, None]:
         ...

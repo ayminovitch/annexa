@@ -1,9 +1,10 @@
+import pytest
+from httpx import AsyncClient, ASGITransport
 import datetime
 
-from httpx import ASGITransport, AsyncClient
-
 from annexa.entrypoints.api import app
-from annexa.shared.infrastructure.di import Container, get_container
+from annexa.entrypoints.di import Container, get_container
+from annexa.shared.domain.time import Clock
 
 
 class FakeClock:
@@ -14,8 +15,9 @@ class FakeClock:
         return self._fixed_time
 
 
+@pytest.mark.asyncio
 async def test_health_check_returns_ok_with_injected_clock() -> None:
-    fixed_now = datetime.datetime(2026, 10, 7, 12, 0, 0, tzinfo=datetime.UTC)
+    fixed_now = datetime.datetime(2026, 1, 1, 12, 0, 0, tzinfo=datetime.UTC)
     fake_container = Container()
     fake_container.clock = FakeClock(fixed_now)
 
@@ -28,6 +30,6 @@ async def test_health_check_returns_ok_with_injected_clock() -> None:
     assert response.status_code == 200
     data = response.json()
     assert data["status"] == "ok"
-    assert data["timestamp"] == "2026-10-07T12:00:00Z"
+    assert data["timestamp"] == "2026-01-01T12:00:00Z"
 
     app.dependency_overrides.clear()
