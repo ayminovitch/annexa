@@ -1,0 +1,26 @@
+version: "2026.1.0"
+description: "AI Act obligations consolidated with 2026 Omnibus amendments."
+obligations:
+  - id: "OBL-001"
+    title: "Cease Prohibited Practice"
+    article: "Article 5"
+    deadline: "2025-02-02"
+    conditions:
+      risk_tiers: ["prohibited_practice"]
+
+  - id: "OBL-002"
+    title: "Comply with GPAI Provider Obligations"
+    article: "Article 53"
+    deadline: "2025-08-02"
+    conditions:
+      roles: ["provider"]
+      risk_tiers: ["gpai_model"]
+
+  - id: "OBL-003"
+    title: "Establish Quality Management System (Annex III)"
+    article: "Article 17"
+    # Note: 2 Dec 2027 reflects the post-omnibus standalone high-risk system deadline
+    deadline: "2027-12-02"
+    conditions:
+      roles: ["provider"]
+      risk_tiers: ["high_risk"]
