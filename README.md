@@ -99,6 +99,10 @@ uv run lint-imports  # architecture contract
 - [ ] Document generation and an MCP server
 - [ ] Dashboard and evaluation suite
 
+## License
+
+[Apache License 2.0](LICENSE).
+
 ## Author
 
 Built by [Aymen Hammami](https://aymen-hammami.com), senior backend engineer. Feedback and issues are welcome.
