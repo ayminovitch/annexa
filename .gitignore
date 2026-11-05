@@ -30,3 +30,4 @@ htmlcov/
 
 # Keep the env template
 !.env.example
+skills/
