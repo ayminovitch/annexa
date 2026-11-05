@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.13"
+      - run: uv sync --frozen
+      - name: Tests
+        run: uv run pytest
+      - name: Type check (strict)
+        run: uv run mypy
+      - name: Architecture contract
+        run: uv run lint-imports

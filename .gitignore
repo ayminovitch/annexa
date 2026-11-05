@@ -24,3 +24,9 @@ htmlcov/
 .vscode/
 *.swp
 *.swo
+
+# Tool caches
+.import_linter_cache/
+
+# Keep the env template
+!.env.example
