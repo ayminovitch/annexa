@@ -40,17 +40,22 @@ def health_check(container: Container = Depends(get_container)) -> HealthRespons
     now = container.clock.now()
     return HealthResponse(status="ok", timestamp=now)
 
+
 class AskRequest(BaseModel):
     prompt: str
 
+
 @app.post("/ask-the-act", tags=["Regulation"])
 async def ask_the_act(
-        request: AskRequest,
-        container: Container = Depends(get_container),
-        user: User = Depends(get_current_user),
+    request: AskRequest,
+    container: Container = Depends(get_container),
+    user: User = Depends(get_current_user),
 ) -> StreamingResponse:
-    async def sse_generator() -> AsyncGenerator[str, None]:
-        async for text_chunk in container.llm_provider.generate_text_stream(request.prompt):
+    async def sse_generator() -> AsyncGenerator[str]:
+        stream = container.llm_provider.generate_text_stream(request.prompt)
+        async for text_chunk in stream:
             yield f"data: {text_chunk}\n\n"
+
         yield "data: [DONE]\n\n"
+
     return StreamingResponse(sse_generator(), media_type="text/event-stream")

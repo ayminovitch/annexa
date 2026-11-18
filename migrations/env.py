@@ -1,15 +1,14 @@
 import asyncio
 from logging.config import fileConfig
 
+from alembic import context
 from sqlalchemy import pool, text
 from sqlalchemy.ext.asyncio import async_engine_from_config
-from alembic import context
-
-from annexa.config.settings import settings
-from annexa.shared.infrastructure.database import Base
 
 import annexa.identity.infrastructure.orm  # noqa: F401
 import annexa.regulation.infrastructure.orm  # noqa: F401
+from annexa.config.settings import settings
+from annexa.shared.infrastructure.database import Base
 
 config = context.config
 

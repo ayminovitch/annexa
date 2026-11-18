@@ -6,16 +6,16 @@ Create Date: 2026-10-27 08:51:31.935639
 
 """
 
-from typing import Sequence, Union
+from collections.abc import Sequence
 
-from alembic import op
+import pgvector.sqlalchemy
 import sqlalchemy as sa
-
+from alembic import op
 
 revision: str = "442605e15745"
-down_revision: Union[str, None] = "9ac31f310e8c"
-branch_labels: Union[str, Sequence[str], None] = None
-depends_on: Union[str, Sequence[str], None] = None
+down_revision: str | None = "9ac31f310e8c"
+branch_labels: str | Sequence[str] | None = None
+depends_on: str | Sequence[str] | None = None
 
 
 def upgrade() -> None:

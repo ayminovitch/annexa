@@ -2,7 +2,6 @@ import ast
 
 
 class AISDKVisitor(ast.NodeVisitor):
-
     TARGET_SDKS = {
         "openai",
         "anthropic",
@@ -12,7 +11,7 @@ class AISDKVisitor(ast.NodeVisitor):
         "llama_index",
         "transformers",
         "torch",
-        "scikit_learn"
+        "scikit_learn",
     }
 
     def __init__(self) -> None:

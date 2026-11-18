@@ -29,7 +29,7 @@ def get_current_user(
     user = decode_access_token(
         token=credentials.credentials,
         secret=settings.jwt_secret,
-        algorithm=settings.jwt_algorithm
+        algorithm=settings.jwt_algorithm,
     )
     if not user:
         raise UnauthorizedError()

@@ -26,6 +26,7 @@ members = ["packages/*"]
 
 [tool.uv.sources]
 annexa-scanner = {workspace = true}
+annexa-sdk = {workspace = true}
 
 [dependency-groups]
 dev = [
@@ -55,12 +56,12 @@ strict = true
 mypy_path = "src"
 explicit_package_bases = true
 warn_unreachable = true
-files = ["src", "tests", "packages/annexa-scanner/src"]
+files = ["src", "tests", "packages/annexa-scanner/src", "packages/annexa-sdk/src"]
 
 [tool.ruff]
 target-version = "py313"
 line-length = 88
-src = ["src", "tests", "packages/annexa-scanner/src"]
+src = ["src", "tests", "packages/annexa-scanner/src", "packages/annexa-sdk/src"]
 
 [tool.ruff.lint]
 select = ["E", "W", "F", "I", "UP", "B", "SIM"]

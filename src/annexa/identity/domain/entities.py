@@ -12,10 +12,12 @@ class Role(StrEnum):
     ENGINEER = "engineer"
     AUDITOR = "auditor"
 
+
 @dataclass(kw_only=True)
 class Tenant(BaseEntity):
     id: TenantId
     name: str
+
 
 @dataclass(kw_only=True)
 class User(BaseEntity):

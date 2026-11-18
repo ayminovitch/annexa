@@ -1,4 +1,5 @@
 from pathlib import Path
+
 import yaml
 from pydantic import ValidationError
 
@@ -11,29 +12,38 @@ class RulePackValidationError(DomainError):
     def __init__(self, detail: str) -> None:
         super().__init__(
             code="RULEPACK_VALIDATION_ERROR",
-            title="Rule Pack Validation Failed.",
+            title="Rule Pack Validation Failed",
             detail=detail,
-            status=500
+            status=500,
         )
 
-def load_rulepack(path: str) -> RulePack:
+
+def load_rulepack(path: Path) -> RulePack:
+    """Loads a YAML file and validates it tightly against our Pydantic models."""
     try:
-        with open(path, "r", encoding="utf-8") as f:
+        with open(path, encoding="utf-8") as f:
             data = yaml.safe_load(f)
+
         return RulePack.model_validate(data)
+
     except ValidationError as e:
-        raise RulePackValidationError(str(e))
-    except FileNotFoundError:
-        raise RulePackValidationError(f"Rule pack not found at {path}")
+        raise RulePackValidationError(str(e)) from e
+    except FileNotFoundError as e:
+        raise RulePackValidationError(f"Rule pack not found at {path}") from e
+
 
 def evaluate_obligations(
-        role: ProviderRole,
-        tier: RiskTier,
-        rule_pack: RulePack
+    role: ProviderRole,
+    tier: RiskTier,
+    rulepack: RulePack,
 ) -> list[Obligation]:
+    """
+    Deterministic Rules Engine.
+    Evaluates an AI System's classifications against the Rule Pack.
+    """
     applicable_obligations: list[Obligation] = []
 
-    for obligation in rule_pack.obligations:
+    for obligation in rulepack.obligations:
         cond = obligation.conditions
 
         if cond.roles is not None and role not in cond.roles:

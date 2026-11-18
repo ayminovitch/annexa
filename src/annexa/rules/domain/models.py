@@ -1,5 +1,7 @@
 from datetime import date
+
 from pydantic import BaseModel, ConfigDict
+
 from annexa.inventory.domain.value_objects import ProviderRole, RiskTier
 
 
@@ -9,6 +11,7 @@ class Condition(BaseModel):
 
     model_config = ConfigDict(extra="forbid")
 
+
 class Obligation(BaseModel):
     id: str
     title: str
@@ -17,6 +20,7 @@ class Obligation(BaseModel):
     conditions: Condition
 
     model_config = ConfigDict(extra="forbid")
+
 
 class RulePack(BaseModel):
     version: str

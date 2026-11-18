@@ -24,11 +24,7 @@ def verify_secret(hash_str: str, secret: str) -> bool:
 
 
 def create_access_token(
-        user: User,
-        clock: Clock,
-        secret: str,
-        algorithm: str,
-        expires_minutes: int
+    user: User, clock: Clock, secret: str, algorithm: str, expires_minutes: int
 ) -> str:
     now = clock.now()
     expires = now + datetime.timedelta(minutes=expires_minutes)
@@ -45,11 +41,9 @@ def create_access_token(
     return jwt.encode(payload, secret, algorithm=algorithm)
 
 
-def decode_access_token(token: str,secret: str, algorithm: str) -> User | None:
+def decode_access_token(token: str, secret: str, algorithm: str) -> User | None:
     try:
-        payload = jwt.decode(
-            token, secret, algorithms=[algorithm]
-        )
+        payload = jwt.decode(token, secret, algorithms=[algorithm])
 
         return User(
             id=UserId(uuid.UUID(payload["sub"])),
